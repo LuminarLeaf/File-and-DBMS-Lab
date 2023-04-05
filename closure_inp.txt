@@ -1,0 +1,13 @@
+6
+id
+name
+dept
+tm
+lm
+cg
+4
+id->name
+dept->lm
+{tm,lm}->cg
+id->{dept,tm}
+id

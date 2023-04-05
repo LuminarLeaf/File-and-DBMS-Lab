@@ -1,0 +1,489 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 5.6.19 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database ott;
+Query OK, 1 row affected (0.02 sec)
+
+mysql>
+mysql> use ott;
+Database changed
+mysql>
+mysql> #Q1
+mysql> create table USER(
+    -> User_Id varchar(25),
+    -> User_Name varchar(25),
+    -> DOB date,
+    -> Age decimal(3,0),
+    -> Email_id varchar(50),
+    -> Watching_hour decimal(5,0),
+    -> primary key (User_Id)
+    -> );
+Query OK, 0 rows affected (0.30 sec)
+
+mysql>
+mysql> create table SHOWS(
+    -> Show_Id decimal(5,0),
+    -> Title varchar(30),
+    -> Release_date date,
+    -> Language varchar(30),
+    -> Rating_Id decimal(8,0),
+    -> Genre_Id decimal(4,0),
+    -> primary key (Show_Id)
+    -> );
+Query OK, 0 rows affected (0.20 sec)
+
+mysql>
+mysql> create table RATING(
+    -> Rating_Id decimal(8,0),
+    -> Show_Id decimal(5,0),
+    -> Star decimal (2,0),
+    -> Date date,
+    -> Comment varchar(100),
+    -> primary key (Rating_Id),
+    -> foreign key (Show_Id) references SHOWS(Show_Id)
+    -> );
+Query OK, 0 rows affected (0.27 sec)
+
+mysql>
+mysql> create table GENRE(
+    -> Genre_Id decimaL(4,0),
+    -> Show_Id decimal(5,0),
+    -> Genre_Name varchar(30),
+    -> primary key (Genre_Id),
+    -> foreign key (Show_Id) references SHOWS(Show_Id)
+    -> );
+Query OK, 0 rows affected (0.23 sec)
+
+mysql>
+mysql> create table WATCH_REVIEW(
+    -> User_Id varchar(25),
+    -> Show_Id decimal(5,0),
+    -> Rating_Id decimal(8,0),
+    -> Genre_Id decimal(4,0),
+    -> foreign key (User_Id) references USER(User_Id),
+    -> foreign key (Rating_Id) references RATING(Rating_Id),
+    -> foreign key (Show_Id) references SHOWS(Show_Id),
+    -> foreign key (Genre_Id) references GENRE(Genre_Id)
+    -> );
+Query OK, 0 rows affected (0.37 sec)
+
+mysql>
+mysql> alter table SHOWS add constraint rating foreign key (Rating_Id) reference
+s RATING(Rating_Id);
+Query OK, 0 rows affected (0.58 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table SHOWS add constraint genre foreign key (Genre_Id) references
+GENRE(Genre_Id);
+Query OK, 0 rows affected (0.45 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> #Q2
+mysql> insert into USER values("dip23","Dinesh Patel","2002-10-23",20,"abc@email
+.com",125);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into USER values("vs2001","Vikram Sharma","2001-07-15",21,"vik@ema
+il.com",329);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into USER values("agra30","Sukesh Agarwal","1993-02-09",30,"sa@ema
+il.com",75);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into USER values("mg2509","Manish Gupta","1997-09-25",25,"man@emai
+l.com",156);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into USER values("tri28","Trina Dutta","1995-11-09",27,"tri28@emai
+l.com",249);
+Query OK, 1 row affected (0.02 sec)
+
+mysql>
+mysql> #Q3
+mysql> set foreign_key_checks=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into SHOWS values(156,"Stranger Things","2016-07-15","English",489
+5,08);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into SHOWS values(258,"Sacred Games","2018-07-05","Hindi",7589,01)
+;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into SHOWS values(895,"The Witcher","2019-12-20","English",5248,15
+);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into SHOWS values(659,"Money Heist","2017-05-02","English",3698,03
+);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into SHOWS values(321,"Breaking Bad","2008-01-20","English",6742,0
+4);
+Query OK, 1 row affected (0.02 sec)
+
+mysql>
+mysql> #Q4
+mysql> insert into RATING values(4895,156,4,"2021-05-16","Nice");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> #insert into RATING values(3574,001,1,"2018-11-29","Very Bad");
+mysql> #insert into RATING values(8517,010,5,"2022-08-15","Wonderful");
+mysql> insert into RATING values(5248,895,3,"2021-09-06","Could be better");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into RATING values(6742,321,5,"2020-10-19","Outstanding");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into RATING values(3698,659,5,"2021-09-30","Fantastic");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into RATING values(7589,258,3,"2022-01-25","Average");
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> #Q5
+mysql> insert into GENRE values(01,258,"Crime");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into GENRE values(03,659,"Thriller");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into GENRE values(04,321,"Suspense");
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into GENRE values(15,895,"Fantasy");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into GENRE values(08,156,"Science Fiction");
+Query OK, 1 row affected (0.03 sec)
+
+mysql>
+mysql> #Q6
+mysql> insert into WATCH_REVIEW values("mg2509",156,4895,08);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into WATCH_REVIEW values("vs2001",321,6742,04);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into WATCH_REVIEW values("tri28",895,5248,15);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into WATCH_REVIEW values("agra30",659,3698,03);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into WATCH_REVIEW values("vs2001",258,7589,01);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from SHOWS;
++---------+-----------------+--------------+----------+-----------+----------+
+| Show_Id | Title           | Release_date | Language | Rating_Id | Genre_Id |
++---------+-----------------+--------------+----------+-----------+----------+
+|     156 | Stranger Things | 2016-07-15   | English  |      4895 |        8 |
+|     258 | Sacred Games    | 2018-07-05   | Hindi    |      7589 |        1 |
+|     321 | Breaking Bad    | 2008-01-20   | English  |      6742 |        4 |
+|     659 | Money Heist     | 2017-05-02   | English  |      3698 |        3 |
+|     895 | The Witcher     | 2019-12-20   | English  |      5248 |       15 |
++---------+-----------------+--------------+----------+-----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from RATING;
++-----------+---------+------+------------+-----------------+
+| Rating_Id | Show_Id | Star | Date       | Comment         |
++-----------+---------+------+------------+-----------------+
+|      3698 |     659 |    5 | 2021-09-30 | Fantastic       |
+|      4895 |     156 |    4 | 2021-05-16 | Nice            |
+|      5248 |     895 |    3 | 2021-09-06 | Could be better |
+|      6742 |     321 |    5 | 2020-10-19 | Outstanding     |
+|      7589 |     258 |    3 | 2022-01-25 | Average         |
++-----------+---------+------+------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from GENRE;
++----------+---------+-----------------+
+| Genre_Id | Show_Id | Genre_Name      |
++----------+---------+-----------------+
+|        1 |     258 | Crime           |
+|        3 |     659 | Thriller        |
+|        4 |     321 | Suspense        |
+|        8 |     156 | Science Fiction |
+|       15 |     895 | Fantasy         |
++----------+---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from WATCH_REVIEW;
++---------+---------+-----------+----------+
+| User_Id | Show_Id | Rating_Id | Genre_Id |
++---------+---------+-----------+----------+
+| mg2509  |     156 |      4895 |        8 |
+| vs2001  |     321 |      6742 |        4 |
+| tri28   |     895 |      5248 |       15 |
+| agra30  |     659 |      3698 |        3 |
+| vs2001  |     258 |      7589 |        1 |
++---------+---------+-----------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> set foreign_key_checks=1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> #Q7
+mysql> update RATING set Star=4 where Rating_Id=7589;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from RATING;
++-----------+---------+------+------------+-----------------+
+| Rating_Id | Show_Id | Star | Date       | Comment         |
++-----------+---------+------+------------+-----------------+
+|      3698 |     659 |    5 | 2021-09-30 | Fantastic       |
+|      4895 |     156 |    4 | 2021-05-16 | Nice            |
+|      5248 |     895 |    3 | 2021-09-06 | Could be better |
+|      6742 |     321 |    5 | 2020-10-19 | Outstanding     |
+|      7589 |     258 |    4 | 2022-01-25 | Average         |
++-----------+---------+------+------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q8
+mysql> #to run this remove # at line 75
+mysql> #delete from RATING where Show_Id=001;
+mysql> #select * from RATING;
+mysql>
+mysql> #Q9
+mysql> insert into USER values("sagar23","Sagar Bhowmik","1999-10-23",23,"sag@gm
+ail.com",12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from USER;
++---------+----------------+------------+------+-----------------+--------------
+-+
+| User_Id | User_Name      | DOB        | Age  | Email_id        | Watching_hour
+ |
++---------+----------------+------------+------+-----------------+--------------
+-+
+| agra30  | Sukesh Agarwal | 1993-02-09 |   30 | sa@email.com    |            75
+ |
+| dip23   | Dinesh Patel   | 2002-10-23 |   20 | abc@email.com   |           125
+ |
+| mg2509  | Manish Gupta   | 1997-09-25 |   25 | man@email.com   |           156
+ |
+| sagar23 | Sagar Bhowmik  | 1999-10-23 |   23 | sag@gmail.com   |            12
+ |
+| tri28   | Trina Dutta    | 1995-11-09 |   27 | tri28@email.com |           249
+ |
+| vs2001  | Vikram Sharma  | 2001-07-15 |   21 | vik@email.com   |           329
+ |
++---------+----------------+------------+------+-----------------+--------------
+-+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q10
+mysql> alter table SHOWS drop foreign key rating;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table SHOWS drop column Rating_Id;
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe SHOWS;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| Show_Id      | decimal(5,0) | NO   | PRI | 0       |       |
+| Title        | varchar(30)  | YES  |     | NULL    |       |
+| Release_date | date         | YES  |     | NULL    |       |
+| Language     | varchar(30)  | YES  |     | NULL    |       |
+| Genre_Id     | decimal(4,0) | YES  | MUL | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.03 sec)
+
+mysql> select * from SHOWS;
++---------+-----------------+--------------+----------+----------+
+| Show_Id | Title           | Release_date | Language | Genre_Id |
++---------+-----------------+--------------+----------+----------+
+|     156 | Stranger Things | 2016-07-15   | English  |        8 |
+|     258 | Sacred Games    | 2018-07-05   | Hindi    |        1 |
+|     321 | Breaking Bad    | 2008-01-20   | English  |        4 |
+|     659 | Money Heist     | 2017-05-02   | English  |        3 |
+|     895 | The Witcher     | 2019-12-20   | English  |       15 |
++---------+-----------------+--------------+----------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q11
+mysql> alter table USER change column Watching_hour Screen_Time decimaL(5,0);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe USER;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| User_Id     | varchar(25)  | NO   | PRI |         |       |
+| User_Name   | varchar(25)  | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
+| Age         | decimal(3,0) | YES  |     | NULL    |       |
+| Email_id    | varchar(50)  | YES  |     | NULL    |       |
+| Screen_Time | decimal(5,0) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+
+mysql>
+mysql> #Q12
+mysql> select Comment from RATING where Star = 5;
++-------------+
+| Comment     |
++-------------+
+| Fantastic   |
+| Outstanding |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q13
+mysql> select distinct User_id from WATCH_REVIEW;
++---------+
+| User_id |
++---------+
+| agra30  |
+| mg2509  |
+| tri28   |
+| vs2001  |
++---------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q14
+mysql> select Email_id from USER where Age>25;
++-----------------+
+| Email_id        |
++-----------------+
+| sa@email.com    |
+| tri28@email.com |
++-----------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q15
+mysql> select Title from SHOWS, RATING where SHOWS.Show_Id = RATING.Show_Id and
+Star >=4;
++-----------------+
+| Title           |
++-----------------+
+| Stranger Things |
+| Sacred Games    |
+| Breaking Bad    |
+| Money Heist     |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q16
+mysql> select Genre_Name from GENRE,RATING where GENRE.Show_Id = RATING.Show_Id
+and Comment = "Outstanding";
++------------+
+| Genre_Name |
++------------+
+| Suspense   |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> #Q17
+mysql> select * from USER where User_Name like "%a";
++---------+---------------+------------+------+-----------------+-------------+
+| User_Id | User_Name     | DOB        | Age  | Email_id        | Screen_Time |
++---------+---------------+------------+------+-----------------+-------------+
+| mg2509  | Manish Gupta  | 1997-09-25 |   25 | man@email.com   |         156 |
+| tri28   | Trina Dutta   | 1995-11-09 |   27 | tri28@email.com |         249 |
+| vs2001  | Vikram Sharma | 2001-07-15 |   21 | vik@email.com   |         329 |
++---------+---------------+------------+------+-----------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q18
+mysql> select count(Show_Id) as No_Of_Shows, Genre_Id from SHOWS group by (Genre
+_Id) order by No_Of_Shows desc;
++-------------+----------+
+| No_Of_Shows | Genre_Id |
++-------------+----------+
+|           1 |        1 |
+|           1 |        3 |
+|           1 |        4 |
+|           1 |        8 |
+|           1 |       15 |
++-------------+----------+
+5 rows in set (0.02 sec)
+
+mysql>
+mysql> #Q19
+mysql>
+mysql> #Q20
+mysql> #select Show_Id from Rating,Genre where Rating.Show_Id=Genre.Show_Id and
+Star = max(select ) group by Genre_Id;
+mysql>
+mysql> #Q21
+mysql> select * from SHOWS where Title LIKE '%r' and LENGTH(Title)=11;
++---------+-------------+--------------+----------+----------+
+| Show_Id | Title       | Release_date | Language | Genre_Id |
++---------+-------------+--------------+----------+----------+
+|     895 | The Witcher | 2019-12-20   | English  |       15 |
++---------+-------------+--------------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> #Q22
+mysql> select REPLACE(Title,'e','E') from SHOWS;
++------------------------+
+| REPLACE(Title,'e','E') |
++------------------------+
+| StrangEr Things        |
+| SacrEd GamEs           |
+| BrEaking Bad           |
+| MonEy HEist            |
+| ThE WitchEr            |
++------------------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> #Q23
+mysql> select Title from SHOWS where Release_date LIKE '2018%' and Language='Hin
+di';
++--------------+
+| Title        |
++--------------+
+| Sacred Games |
++--------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+mysql> #Q24
+mysql> select User_Name from USER where Age between 20 and 25;
++---------------+
+| User_Name     |
++---------------+
+| Dinesh Patel  |
+| Manish Gupta  |
+| Sagar Bhowmik |
+| Vikram Sharma |
++---------------+
+4 rows in set (0.00 sec)
+
+mysql>
